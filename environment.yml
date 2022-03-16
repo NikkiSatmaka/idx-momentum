@@ -1,0 +1,14 @@
+name: null
+
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  - pip
+  - pytz
+  - numpy
+  - pandas
+  - scipy
+  - ta-lib
+  - ipykernel
