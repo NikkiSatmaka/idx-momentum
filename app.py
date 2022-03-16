@@ -72,7 +72,7 @@ def filter_stocks(path, momentum_window, vola_window, ma_period_fast, ma_period_
     """
     data = load_data(path)
 
-    # Create an empty DataFrame to store score
+    # Create an empty DataFrame to store Momentum stocks
     momentum_cols = [
         'ticker',
         'score',
@@ -84,7 +84,7 @@ def filter_stocks(path, momentum_window, vola_window, ma_period_fast, ma_period_
     ]
     momentum_df = pd.DataFrame(columns=momentum_cols)
 
-    # Create empty DataFrame to store Eliminated stocks
+    # Create an empty DataFrame to store Eliminated stocks
     eliminated_cols = ['ticker', 'score', 'vola', 'reason']
     eliminated_df = pd.DataFrame(columns=eliminated_cols)
 
