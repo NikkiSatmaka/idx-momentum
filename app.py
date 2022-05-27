@@ -127,13 +127,13 @@ def filter_stocks(path, momentum_window, vola_window, ma_period_fast, ma_period_
         if eliminate:
             # Concat the new eliminated stock to the eliminated_df
             eliminate_new = [ticker, score, vola, reason]
-            eliminate_new = pd.DataFrame(dict(zip(eliminated_cols, eliminate_new)), index=[0])
+            eliminate_new = pd.DataFrame([eliminate_new], columns=eliminated_cols)
             eliminated_df = pd.concat([eliminated_df, eliminate_new])
 
         else:
             # Concat the new momentum stock to the momentum_df
             momentum_new = [ticker, score, vola, inv_vola, ma_fast, ma_slow, median_volume]
-            momentum_new = pd.DataFrame(dict(zip(momentum_cols, momentum_new)), index=[0])
+            momentum_new = pd.DataFrame([momentum_new], columns=momentum_cols)
             momentum_df = pd.concat([momentum_df, momentum_new])
     
     momentum_df = momentum_df.reset_index(drop=True)
