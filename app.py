@@ -7,7 +7,8 @@ from datetime import datetime
 from pathlib import Path
 from scipy import stats
 
-csvDir = r'C:\Users\nikki\Documents\data-ab\idx_exported_csv'
+# csvDir = Path.home().joinpath(r'Documents\data-ab\idx_exported_csv')
+csvDir = Path.home().joinpath('.var/app/com.usebottles.bottles/data/bottles/bottles/amibroker/drive_c/data-ab/idx_exported_csv')
 
 
 def load_data(path):
@@ -16,7 +17,7 @@ def load_data(path):
     Output: Dictionary where the key is the ticker
         and the value is a pandas dataframe of the OHLC time series
     """
-    csv_loc = Path(path)    # csv folder Path
+    csv_loc = Path(path)    # csv folder Path, make sure it's a Path object
 
     # IDX stock's tickers always have 4 characters
     files = list(csv_loc.glob('????.csv'))
