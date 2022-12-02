@@ -1,11 +1,24 @@
-import numpy as np
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 import os
 import pytz
+import logging
+import numpy as np
 import pandas as pd
 
 from datetime import datetime
 from pathlib import Path
 from scipy import stats
+
+logging.basicConfig(
+    level=logging.INFO,
+    format=" %(asctime)s - %(levelname)s - %(message)s",
+)
+warnings.filterwarnings("ignore")
+
+# Create a custom logger
+logger = logging.getLogger(__name__)
 
 # csvDir = Path.home().joinpath(r'Documents\data-ab\idx_exported_csv')
 csvDir = Path.home().joinpath('.var/app/com.usebottles.bottles/data/bottles/bottles/amibroker/drive_c/data-ab/idx_exported_csv')
@@ -28,7 +41,7 @@ def load_data(path):
                                         index_col=0,
                                         parse_dates=True)
         data_idx[file.stem] = data_idx[file.stem].tz_localize(tz='Asia/Jakarta')
-    
+
     return data_idx
 
 
@@ -144,14 +157,15 @@ def filter_stocks(path, momentum_window, vola_window, ma_period_fast, ma_period_
 
 
 ## Run the function
+if __name__ == "__main__":
+    momentum_df, eliminated_df = filter_stocks(csvDir, 96, 24, 32, 128)
 
-momentum_df, eliminated_df = filter_stocks(csvDir, 96, 24, 32, 128)
+    logger.info(f'Ada {len(momentum_df)} saham lolos')
+    logger.info(f'Ada {len(eliminated_df)} saham tereliminasi')
 
-print(f'Ada {len(momentum_df)} saham lolos')
-print(f'Ada {len(eliminated_df)} saham tereliminasi')
+    print(momentum_df.sort_values('score', ascending=False)[:50])
+    print(eliminated_df.sort_values('score', ascending=False)[:10])
 
-print(momentum_df.sort_values('score', ascending=False)[:50])
-print(eliminated_df.sort_values('score', ascending=False)[:10])
+    # Copy the DataFrame to clipboard
+    momentum_df.sort_values('score', ascending=False)[:50].to_clipboard()
 
-# Copy the DataFrame to clipboard
-momentum_df.sort_values('score', ascending=False)[:50].to_clipboard()
