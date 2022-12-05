@@ -4,6 +4,7 @@
 import os
 import pytz
 import logging
+import warnings
 import numpy as np
 import pandas as pd
 
@@ -48,13 +49,13 @@ def load_data(path):
 def momentum_score(timeseries):
     """
     Input:  Price time series.
-    Output: Annualized exponential regression slope, 
+    Output: Annualized exponential regression slope,
             multiplied by the R2
     """
     # Make a list of consecutive numbers
-    x = np.arange(len(timeseries)) 
+    x = np.arange(len(timeseries))
     # Get logs
-    log_ts = np.log(timeseries) 
+    log_ts = np.log(timeseries)
     # Calculate regression values
     slope, intercept, r_value, p_value, std_err = stats.linregress(x, log_ts)
     # Annualize percent
@@ -123,12 +124,12 @@ def filter_stocks(path, momentum_window, vola_window, ma_period_fast, ma_period_
         if len(timeseries) < 756:
             eliminate = True
             reason = 'umur belum 3 tahun'
-        
-        # If median volume falls below 100k in the stocks, drop it 
+
+        # If median volume falls below 100k in the stocks, drop it
         elif median_volume < 100000:
             eliminate = True
             reason = 'median volume di bawah 100k'
-            
+
         # If it has been suspended (daily vol == 0) more than once, drop it
         elif timeseries['Volume'].iloc[-momentum_window:].tolist().count(0) > 1:
             eliminate = True
@@ -149,7 +150,7 @@ def filter_stocks(path, momentum_window, vola_window, ma_period_fast, ma_period_
             momentum_new = [ticker, score, vola, inv_vola, ma_fast, ma_slow, median_volume]
             momentum_new = pd.DataFrame([momentum_new], columns=momentum_cols)
             momentum_df = pd.concat([momentum_df, momentum_new])
-    
+
     momentum_df = momentum_df.reset_index(drop=True)
     eliminated_df = eliminated_df.reset_index(drop=True)
 
