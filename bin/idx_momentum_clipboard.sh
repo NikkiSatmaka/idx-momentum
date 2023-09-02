@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 
-source $HOME/mambaforge/etc/profile.d/conda.sh
-conda activate $HOME/workspace/algotrading/idxmomentumbot/.env
-python $HOME/workspace/algotrading/idxmomentumbot/app.py
-read
+script="app.py"
 
+# setup dir variables
+project_dir="$HOME/workspace/algotrading/idxmomentumbot"
+
+# activate micromamba environment
+source "$project_dir/bin/micromamba_activate.sh"
+
+python "$project_dir/$script"
+read
