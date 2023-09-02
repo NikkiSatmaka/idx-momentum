@@ -164,8 +164,9 @@ if __name__ == "__main__":
     logger.info(f'Ada {len(momentum_df)} saham lolos')
     logger.info(f'Ada {len(eliminated_df)} saham tereliminasi')
 
-    print(momentum_df.sort_values('score', ascending=False)[:50])
-    print(eliminated_df.sort_values('score', ascending=False)[:10])
+    # print(momentum_df.sort_values('score', ascending=False)[:50])
+    # print(eliminated_df.sort_values('score', ascending=False)[:10])
+    print(eliminated_df[eliminated_df["reason"] == "pernah disuspend lebih dari 1x"].sort_values('score', ascending=False))
 
     # Copy the DataFrame to clipboard
     momentum_df.sort_values('score', ascending=False)[:50].to_clipboard()
