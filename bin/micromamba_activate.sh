@@ -7,7 +7,7 @@ user="nikki"
 
 micromamba_script="$HOME/micromamba/etc/profile.d/micromamba.sh"
 micromamba_script_backup="/home/$user/micromamba/etc/profile.d/micromamba.sh"
-env_dir="$(dirname $(dirname $(realpath $0)))/.conda.env"
+env_dir="$(dirname $(dirname $(realpath $0)))/.conda_env"
 
 # if user has micromamba installed, use it
 # otherwise, set the user that has micromamba installed
