@@ -4,19 +4,21 @@
 # appoint user who has micromamba installed. if none, install using
 # curl micro.mamba.pm/install.sh | bash
 user="nikki"
+env_dir=".conda_env"
 
 micromamba_script="$HOME/micromamba/etc/profile.d/micromamba.sh"
-micromamba_script_backup="/home/$user/micromamba/etc/profile.d/micromamba.sh"
-env_dir="$(dirname $(dirname $(realpath $0)))/.conda_env"
 
-# if user has micromamba installed, use it
-# otherwise, set the user that has micromamba installed
-if [[ -f $micromamba_script ]] ; then
-    source $micromamba_script
-else
-    export MAMBA_EXE="/home/$user/.local/bin/micromamba";
-    export MAMBA_ROOT_PREFIX="/home/$user/micromamba";
-    source $micromamba_script_backup
+# if user does not has micromamba installed
+# set the user that has micromamba installed
+if [[ ! -f $micromamba_script ]] ; then
+    HOME="/home/$user"
+    micromamba_script="$HOME/micromamba/etc/profile.d/micromamba.sh"
 fi
+
+env_dir="$(dirname $(dirname $(realpath $0)))/$env_dir"
+
+export MAMBA_EXE="$HOME/.local/bin/micromamba";
+export MAMBA_ROOT_PREFIX="$HOME/micromamba";
+source $micromamba_script
 
 micromamba activate $env_dir
