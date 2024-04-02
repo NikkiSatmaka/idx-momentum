@@ -4,7 +4,7 @@
 # appoint user who has micromamba installed. if none, install using
 # curl micro.mamba.pm/install.sh | bash
 user="nikki"
-env_dir=".conda_env"
+env_dir=".conda"
 
 micromamba_script="$HOME/micromamba/etc/profile.d/micromamba.sh"
 
