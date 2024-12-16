@@ -3,10 +3,6 @@
 script="app.py"
 
 # setup dir variables
-project_dir="$HOME/workspace/algotrading/idxmomentumbot"
+project_dir="$(dirname "$(dirname "$(realpath "$0")")")"
 
-# activate micromamba environment
-source "$project_dir/bin/micromamba_activate.sh"
-
-python "$project_dir/$script"
-read
+pixi run --manifest-path="$project_dir/pixi.toml" "$project_dir/$script"
